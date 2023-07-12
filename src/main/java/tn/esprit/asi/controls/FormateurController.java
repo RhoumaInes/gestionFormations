@@ -24,7 +24,7 @@ public class FormateurController {
 	
 	@PostMapping("/add-formateur")
 	@ResponseBody
-	public Formateur addEvent(@RequestBody Formateur f)
+	public Formateur addFormateur(@RequestBody Formateur f)
 	{
 		return formateurService.addFormateur(f);
 	}

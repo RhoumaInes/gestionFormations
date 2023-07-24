@@ -1,5 +1,6 @@
 package tn.esprit.asi.configs;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -11,11 +12,11 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 
 @Configuration
 @EnableWebMvc
 public class WebConfig {
+
 	private static final Long MAX_AGE = 3600L;
     private static final int CORS_FILTER_ORDER = -102;
 

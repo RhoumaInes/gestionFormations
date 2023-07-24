@@ -17,17 +17,16 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 	private final UserAuthenticationEntryPoint userAuthenticationEntryPoint;
-    private final UserAuthenticationProvider userAuthenticationProvider;
-    
-    // Or, if you want to match multiple paths, use the AntPathRequestMatcher array
+	private final userAuthenticationProvider userAuthenticationProvider;
+	
+	// Or, if you want to match multiple paths, use the AntPathRequestMatcher array
     RequestMatcher[] requestMatchers = {
         new AntPathRequestMatcher("/login", "POST"),
         new AntPathRequestMatcher("/register", "POST"),
         // Add more path and method combinations as needed
     };
-
     
-    @Bean
+	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .exceptionHandling().authenticationEntryPoint(userAuthenticationEntryPoint)
@@ -37,10 +36,9 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(requestMatchers).permitAll()
+                		.requestMatchers(requestMatchers).permitAll()
                         .anyRequest().authenticated())
         ;
         return http.build();
     }
-
 }

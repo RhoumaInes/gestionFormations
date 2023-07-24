@@ -3,6 +3,7 @@ package tn.esprit.asi.services;
 import java.nio.CharBuffer;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,14 +19,16 @@ import tn.esprit.asi.reposetories.UserRepository;
 
 @RequiredArgsConstructor
 @Service
-public class UserService {
-	private final UserRepository userRepository;
-
-    private final PasswordEncoder passwordEncoder;
-    
-    private final UserMapper userMapper;
-    
-    public UserDto login(CredentialsDto credentialsDto) {
+public class userService {
+	@Autowired
+	private final UserRepository userRepository ;
+	@Autowired
+	private final UserMapper userMapper;
+	@Autowired
+	private final PasswordEncoder passwordEncoder;
+	
+	public UserDto login(CredentialsDto credentialsDto) {
+		System.out.println(credentialsDto.getLogin());
         User user = userRepository.findByLogin(credentialsDto.getLogin())
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
 
@@ -34,23 +37,27 @@ public class UserService {
         }
         throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
     }
-    
-    public UserDto register(SignUpDto userDto) {
+	
+	public UserDto register(SignUpDto userDto) {
+		System.out.println(userDto);
+		System.out.println(userDto.getLogin());
         Optional<User> optionalUser = userRepository.findByLogin(userDto.getLogin());
-
+		
+		
         if (optionalUser.isPresent()) {
             throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
         }
 
         User user = userMapper.signUpToUser(userDto);
+        System.out.println(user.getPassword());
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.getPassword())));
 
         User savedUser = userRepository.save(user);
 
         return userMapper.toUserDto(savedUser);
     }
-    
-    public UserDto findByLogin(String login) {
+	
+	public UserDto findByLogin(String login) {
         User user = userRepository.findByLogin(login)
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
         return userMapper.toUserDto(user);

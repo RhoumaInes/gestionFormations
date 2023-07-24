@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 	
-	private final UserAuthenticationProvider userAuthenticationProvider;
+	private final userAuthenticationProvider userAuthenticationProvider;
 	
 	@Override
 	protected void doFilterInternal(
@@ -41,5 +41,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
+
 
 }

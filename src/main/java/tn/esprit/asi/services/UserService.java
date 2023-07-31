@@ -12,9 +12,12 @@ import lombok.RequiredArgsConstructor;
 import tn.esprit.asi.dtos.CredentialsDto;
 import tn.esprit.asi.dtos.SignUpDto;
 import tn.esprit.asi.dtos.UserDto;
+import tn.esprit.asi.entities.Formateur;
+import tn.esprit.asi.entities.Role;
 import tn.esprit.asi.entities.User;
 import tn.esprit.asi.exceptions.AppException;
 import tn.esprit.asi.mappers.UserMapper;
+import tn.esprit.asi.reposetories.FormateurRep;
 import tn.esprit.asi.reposetories.UserRepository;
 
 @RequiredArgsConstructor
@@ -22,6 +25,8 @@ import tn.esprit.asi.reposetories.UserRepository;
 public class userService {
 	@Autowired
 	private final UserRepository userRepository ;
+	@Autowired
+	private final FormateurRep formateurRep;
 	@Autowired
 	private final UserMapper userMapper;
 	@Autowired
@@ -39,16 +44,27 @@ public class userService {
     }
 	
 	public UserDto register(SignUpDto userDto) {
-		System.out.println(userDto);
-		System.out.println(userDto.getLogin());
-        Optional<User> optionalUser = userRepository.findByLogin(userDto.getLogin());
+		System.out.println("okZZZE");
+        Optional<Formateur> optionalUser = formateurRep.findByLogin(userDto.getLogin());
 		
-		
+		System.out.println("ok");
         if (optionalUser.isPresent()) {
             throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
         }
-
+        System.out.println("ok");
         User user = userMapper.signUpToUser(userDto);
+        System.out.println(user);
+        if (optionalUser.get().getTYPE_UP()=="o") {
+        	//CUP
+        	user.setRole(Role.CUP);
+        } else if (optionalUser.get().getUP()=="o") {
+        	//UP
+        	user.setRole(Role.UP);
+        } else {
+        	//Ens
+        	user.setRole(Role.ENS);
+        }
+        
         System.out.println(user.getPassword());
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.getPassword())));
 

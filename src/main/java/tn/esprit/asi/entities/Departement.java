@@ -37,7 +37,7 @@ public class Departement {
 	@Temporal(TemporalType.DATE)
 	private Date DATE_DERNIER_MODIF;
 	private String CODE_TRIE;
-	@OneToMany(cascade = CascadeType.ALL , mappedBy = "depat")
-	private Set<UP> listUp;
+	/*@OneToMany(cascade = CascadeType.ALL , mappedBy = "depat")
+	private Set<UP> listUp;*/
 	
 }

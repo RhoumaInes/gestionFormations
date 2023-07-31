@@ -29,11 +29,13 @@ public class UP {
 	private String id;
 	
 	private String DESIGNANTION;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@Column(name = "CODE_DEPT")
+	private String codedept;
+	/*@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="CODE_DEPT")
 	private Departement depat;
 	
 	@OneToMany(cascade = CascadeType.ALL , mappedBy = "UP_code")
-	private Set<Formateur> listFormateurUp;
+	private Set<Formateur> listFormateurUp;*/
 
 }

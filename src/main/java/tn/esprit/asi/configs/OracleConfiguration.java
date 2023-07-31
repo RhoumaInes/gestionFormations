@@ -12,8 +12,8 @@ public class OracleConfiguration {
     public DataSource dataSource() throws Exception {
         OracleDataSource dataSource = new OracleDataSource();
         dataSource.setURL("jdbc:oracle:thin:@localhost:1521/orcl");
-        dataSource.setUser("sys as sysdba");
-        dataSource.setPassword("ORA_db_23");
+        dataSource.setUser("sco_def");
+        dataSource.setPassword("sco_def");
         return dataSource;
     }
 

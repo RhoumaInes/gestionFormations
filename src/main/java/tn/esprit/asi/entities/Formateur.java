@@ -59,9 +59,9 @@ public class Formateur {
 	private int COMITE_ID_GRP;
 	private int FK_CMT;
 	private String TYPE_UP;
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="UP")
-	private UP UP_code;
+	/*@ManyToOne(cascade = CascadeType.ALL)
+	*/
+	private String UP;
 	@Temporal(TemporalType.DATE)
 	private Date DATE_DEB_UP;
 	private String MAIL_ENS;
